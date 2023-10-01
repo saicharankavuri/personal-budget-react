@@ -1,6 +1,6 @@
 import React from 'react';
 import AboutPage from './AboutPage/AboutPage';
-import './App.css';
+import './App.scss';
 import Footer from './Footer/Footer';
 import Hero from './Hero/Hero';
 import HomePage from './HomePage/HomePage';
