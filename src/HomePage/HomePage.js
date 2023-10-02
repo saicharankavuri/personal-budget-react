@@ -1,11 +1,11 @@
 import axios from 'axios';
 import Chart from 'chart.js/auto';
 import * as d3 from 'd3';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../App.scss';
 
 function HomePage() {
-
+  const chartRef = useRef(null);
   let data_p= {
     data: [],
     backgroundColor: [
@@ -24,6 +24,10 @@ function HomePage() {
   useEffect(() =>{
     function Chart_create (data){
             
+
+      if(chartRef.current) {
+        d3.select(chartRef.current).select('svg').remove();
+      }
       console.log(data);
       // Set up the dimensions and radius for the pie chart
       var width = 400;
@@ -97,6 +101,8 @@ function HomePage() {
       axios.get('http://localhost:4000/budget')
       .then((res) => {
           console.log(res.data.myBudget.length);
+          data_p.data = [];
+          data_p.labels = [];
           for(var i = 0; i < res.data.myBudget.length; i++ ){
               data_p.data.push(res.data.myBudget[i].budget);
               data_p.labels.push(res.data.myBudget[i].title);
@@ -182,7 +188,7 @@ function HomePage() {
                 
             </div>
             <h2> Chart generated through D3JS </h2>
-            <div id="chart"></div>
+            <div id="chart" ref={chartRef}></div>
         
         </div>
     
